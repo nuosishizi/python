@@ -4,5 +4,6 @@
 
 2、转换heic图片到jpg，并且删除图片的gps信息。
 - 需要下载安装imagemagick: https://www.imagemagick.org/
+
 3、压缩图片
 - 压缩所有大于200kb的图片，并删除原始图片。需要注意。
