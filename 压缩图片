@@ -1,0 +1,23 @@
+# 支持压缩jpg、jepg、png格式的图片。大于200kb的压缩，并删除原始文件。
+
+import os
+from PIL import Image
+
+def compress_images(directory, max_size=200):
+    for root, dirs, files in os.walk(directory):
+        for filename in files:
+            file_path = os.path.join(root, filename)
+            if filename.lower().endswith('.jpg') or filename.lower().endswith('.jpeg') or filename.lower().endswith('.png'):
+                size = os.stat(file_path).st_size / 1024  # 获取图片文件大小，单位为 KB
+                if size > max_size:
+                    print(f'Compressing {file_path}...')
+                    with Image.open(file_path) as img:
+                        w, h = img.size
+                        img = img.resize((int(w*0.9), int(h*0.9)))
+                        img.save(file_path, optimize=True, quality=85)
+                  #os.remove(file_path) #这里如果不注释，就会删除压缩的文件。
+                else:
+                    print(f'Skipping {file_path}...')
+
+# 使用当前目录作为根目录，递归遍历所有 JPG、JPEG 和 PNG 文件并进行压缩和删除操作
+compress_images('.', max_size=200)
